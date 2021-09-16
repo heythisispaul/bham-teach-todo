@@ -1,7 +1,3 @@
-const test = (arg) => {
-  console.log('hello there from todos, ', arg, '!');
-}
-
 let todos = [];
 const TODO_LIST = 'todo-list';
 const TODO_STORAGE = 'todo-storage';
@@ -18,24 +14,31 @@ const getFreshTodoList = () => {
   return { todoList, listAnchor };
 };
 
+const onComplete = (index) => {
+  todos[index].complete = !todos[index].complete;
+    updateTodos();
+}
+
+const createTodoNode = (todo, index) => {
+  const element = document.createElement('li');
+
+  element.innerHTML = `
+    <div class="todo ${todo.complete ? 'complete' : ''}">
+      <p>${todo.text}</p>
+      <button onclick="onComplete(${index})">
+        ${todo.complete ? 'Uncomplete' : 'Complete'}
+      </button>
+    </div>
+  `;
+  return element;
+};
+
 const updateTodos = () => {
   const todoFragment = document.createDocumentFragment();
   const { todoList, listAnchor } = getFreshTodoList();
 
   todos.forEach((todo, index) => {
-    const todoElement = document.createElement('li');
-
-    const text = document.createElement('p');
-    text.innerText = todo.text;
-
-    const completeButton = document.createElement('button');
-    completeButton.innerText = todo.complete ? 'Uncomplete' : 'Complete';
-    completeButton.onclick = () => {
-      todos[index].complete = !todos[index].complete;
-      updateTodos();
-    };
-    todoElement.appendChild(text);
-    todoElement.appendChild(completeButton);
+    const todoElement = createTodoNode(todo, index);
     todoList.appendChild(todoElement);
   });
   todoFragment.appendChild(todoList);
