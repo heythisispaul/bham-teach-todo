@@ -16,18 +16,30 @@ const getFreshTodoList = () => {
 
 const onComplete = (index) => {
   todos[index].complete = !todos[index].complete;
-    updateTodos();
+  updateTodos();
 }
+
+const deleteTodo = (index) => {
+  todos.splice(index, 1);
+  updateTodos();
+};
 
 const createTodoNode = (todo, index) => {
   const element = document.createElement('li');
 
   element.innerHTML = `
     <div class="todo ${todo.complete ? 'complete' : ''}">
+      <span class="to-right">
+        <button onclick="deleteTodo(${index})" class="delete-button">
+          X
+        </button>
+      </span>
       <p>${todo.text}</p>
-      <button onclick="onComplete(${index})">
-        ${todo.complete ? 'Uncomplete' : 'Complete'}
-      </button>
+      <span class="to-right">
+        <button onclick="onComplete(${index})" class="complete-button">
+          ${todo.complete ? 'Uncomplete' : 'Complete'}
+        </button>
+      </span>
     </div>
   `;
   return element;

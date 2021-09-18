@@ -8,10 +8,10 @@
       <h1>Paul's Todos</h1>
       <div id="todo-root">
       </div>
-      <div>
+      <form onsubmit="addTodo()">
         <input tabindex="0" id="new-todo-input" />
-        <button onclick="addTodo()">New Todo</button>
-      </div>
+        <button type="submit">New Todo</button>
+      </form>
     </div>
     <script src="./todos.js"></script>
   </body>
